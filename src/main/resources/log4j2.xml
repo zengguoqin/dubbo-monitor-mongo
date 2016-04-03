@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+
+    <Appenders>
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout charset="UTF-8" pattern="%d{ABSOLUTE} &lt;%c&gt; %5p [%t]: %m%n"/>
+        </Console>
+
+        <Console name="STDERR" target="SYSTEM_ERR">
+            <PatternLayout charset="UTF-8" pattern="%d{ABSOLUTE} &lt;%c&gt; %5p [%t]: %m%n"/>
+        </Console>
+
+        <RollingRandomAccessFile name="LOG_FILE" fileName="${sys:user.dir}/logs/dubbo-monitor-mongo.log"
+                                 filePattern="$${sys:user.dir}/logs/$${date:yyyy-MM}/dubbo-monitor-mongo-%d{yyyy-MM-dd}-%i.log.gz">
+
+            <PatternLayout charset="UTF-8" pattern="%d{ABSOLUTE} &lt;%c&gt; %5p [%t]: %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <DefaultRolloverStrategy/>
+        </RollingRandomAccessFile>
+    </Appenders>
+
+    <Loggers>
+        <!-- Root Logger -->
+        <Root level="info">
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="LOG_FILE"/>
+        </Root>
+    </Loggers>
+
+</Configuration>

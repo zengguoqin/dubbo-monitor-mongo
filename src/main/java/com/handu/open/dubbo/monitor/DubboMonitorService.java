@@ -1,12 +1,12 @@
 /**
  * Copyright 2006-2015 handu.com
- * <p/>
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p/>
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- * <p/>
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -130,10 +130,13 @@ public class DubboMonitorService implements MonitorService {
                 }
             } else {
                 dubboInvoke.setType(PROVIDER);
-                dubboInvoke.setConsumer(statistics.getParameter(CONSUMER));
-                int i = dubboInvoke.getConsumer().indexOf(':');
-                if (i > 0) {
-                    dubboInvoke.setConsumer(dubboInvoke.getConsumer().substring(0, i));
+                String consumer = statistics.getParameter(CONSUMER);
+                if (!StringUtils.isEmpty(consumer)) {
+                    dubboInvoke.setConsumer(consumer);
+                    int i = dubboInvoke.getConsumer().indexOf(':');
+                    if (i > 0) {
+                        dubboInvoke.setConsumer(dubboInvoke.getConsumer().substring(0, i));
+                    }
                 }
                 dubboInvoke.setProvider(statistics.getHost());
             }
@@ -185,9 +188,9 @@ public class DubboMonitorService implements MonitorService {
 
         TypedAggregation<DubboInvoke> aggregation = Aggregation.newAggregation(DubboInvoke.class,
                 Aggregation.match(Criteria.where("service").is(dubboInvoke.getService())
-                                .and("method").is(dubboInvoke.getMethod())
-                                .and("type").is(dubboInvoke.getType())
-                                .and("invokeDate").gte(dubboInvoke.getInvokeDateFrom()).lte(dubboInvoke.getInvokeDateTo())
+                        .and("method").is(dubboInvoke.getMethod())
+                        .and("type").is(dubboInvoke.getType())
+                        .and("invokeDate").gte(dubboInvoke.getInvokeDateFrom()).lte(dubboInvoke.getInvokeDateTo())
                 ),
                 Aggregation.project("service", "method", "type", "success", "failure", "elapsed", "maxElapsed", "maxConcurrent", "invokeTime")
                         .andExpression("(invokeTime / " + dubboInvoke.getTimeParticle() + ") * " + dubboInvoke.getTimeParticle()).as("invokeTime"),
@@ -234,9 +237,9 @@ public class DubboMonitorService implements MonitorService {
         }
         TypedAggregation<DubboInvoke> aggregation = Aggregation.newAggregation(DubboInvoke.class,
                 Aggregation.match(Criteria.where("service").is(dubboInvoke.getService())
-                                .and("method").is(dubboInvoke.getMethod())
-                                .and("type").is(dubboInvoke.getType())
-                                .and("invokeDate").gte(dubboInvoke.getInvokeDateFrom()).lte(dubboInvoke.getInvokeDateTo())
+                        .and("method").is(dubboInvoke.getMethod())
+                        .and("type").is(dubboInvoke.getType())
+                        .and("invokeDate").gte(dubboInvoke.getInvokeDateFrom()).lte(dubboInvoke.getInvokeDateTo())
                 ),
                 Aggregation.group("service", "method")
                         .sum("success").as("success")
