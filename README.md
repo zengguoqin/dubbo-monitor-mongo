@@ -12,7 +12,8 @@ Dubbo Monitor是针对Dubbo开发的监控系统，基于dubbo-monitor-simple改
 > 1. 发布1.0.1版本（by [菩提树下的杨过](http://yjmyzz.cnblogs.com)）
 > 2. 将zkclient升级成[0.8.1](https://github.com/yjmyzz/zkclient)。
 > 3. 将依赖的dubbox版本升级成[2.8.4a](https://github.com/yjmyzz/dubbox)
-> 4. 修正consumer为null时,写入mongodb失败的bug
+> 4. 将log4j升级为log4j2
+> 5. 修正consumer为null时,写入mongodb失败的bug
 
 >### 2015-12-23
 >
